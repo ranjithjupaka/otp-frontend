@@ -45,7 +45,7 @@ const Signup = () => {
           '& > :not(style)': {
             m: 1,
             width: 350,
-            height: 450,
+            height: 250,
           },
         }}
       >
@@ -72,7 +72,7 @@ const Signup = () => {
               justifyContent: 'space-between',
               alignItems: 'center',
               flexDirection: 'column',
-              height: '70%',
+              height: '50%',
             }}
           >
             <TextField
