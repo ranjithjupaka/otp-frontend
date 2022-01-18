@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
-import AccountCircle from '@mui/icons-material/AccountCircle'
-import LockIcon from '@mui/icons-material/Lock'
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail'
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom';
@@ -65,7 +63,7 @@ const Signup = () => {
               Welcome !
             </Typography>
             <Typography variant='body1' style={{ color: '#cecfd3' }}>
-              Enter your Details to Create your Account
+              Enter your Email to Create your Account
             </Typography>
           </Box>
           <Box
@@ -77,19 +75,6 @@ const Signup = () => {
               height: '70%',
             }}
           >
-            <TextField
-              placeholder='Enter your Name'
-              variant='outlined'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
-              style={{ width: '90%' }}
-              required
-            />
             <TextField
               placeholder='Enter your Email'
               type='email'
@@ -103,34 +88,6 @@ const Signup = () => {
               }}
               style={{ width: '90%' }}
               onChange={handleChange}
-              required
-            />
-            <TextField
-              placeholder='Enter Password'
-              type='password'
-              variant='outlined'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <LockIcon />
-                  </InputAdornment>
-                ),
-              }}
-              style={{ width: '90%' }}
-              required
-            />
-            <TextField
-              placeholder='Confirm Password'
-              type='password'
-              variant='outlined'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <LockIcon />
-                  </InputAdornment>
-                ),
-              }}
-              style={{ width: '90%' }}
               required
             />
             <Button
