@@ -8,9 +8,13 @@ import { Box, Paper } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
 import PutReq from '../constants/PutReq'
 import axios from 'axios'
+import PopBox from '../components/PopBox'
 
 const VerifyOtp = () => {
   const [otp, setOTP] = useState('')
+  const [open, setOpen] = useState(false)
+  const [msg, setMsg] = useState('')
+
   const params = useParams();
   let navigate = useNavigate()
   const handleSubmit = (e) => {
@@ -25,7 +29,12 @@ const VerifyOtp = () => {
       })
         .then((data) => {
           console.log(data)
-          navigate('/dashboard')
+           if (data.data.statusCode === 200) {
+                navigate('/dashboard')
+           } else {
+             setMsg(data.data.body.message)
+             setOpen(true)
+           }
         })
         .catch((err) => {
           console.log(err)
@@ -96,6 +105,7 @@ const VerifyOtp = () => {
             >
               Verify Account
             </Button>
+            <PopBox open={open} msg={msg} setOpen={setOpen} />
           </Box>
         </Paper>
       </Box>

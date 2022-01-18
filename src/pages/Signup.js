@@ -8,10 +8,13 @@ import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PostReq from '../constants/PostReq';
+import PopBox from '../components/PopBox';
 
 const Signup = () => {
 
   const [email, setEmail] = useState('');
+  const [open, setOpen] = useState(false)
+  const [msg, setMsg] = useState('');
 
   let navigate = useNavigate();
 
@@ -26,7 +29,12 @@ const Signup = () => {
     })
       .then((data) => {
         console.log(data)
-        navigate(`/verify/${email}`)
+        if (data.data.statusCode === 200) {
+          navigate(`/verify/${email}`)
+        } else {
+          setMsg(data.data.body.message);
+          setOpen(true);
+        }
       })
       .catch((err) => {
         console.log(err)
@@ -97,10 +105,11 @@ const Signup = () => {
             >
               Signup
             </Button>
+            <PopBox open={open} msg={msg} setOpen={setOpen}/>
           </Box>
         </Paper>
       </Box>
     )
-}
+}     
 
 export default Signup   

@@ -6,7 +6,7 @@ const PutReq = {
   },
   resource: '/{proxy+}',
   path: '/path/to/resource',
-  httpMethod: 'POST',
+  httpMethod: 'PUT',
   isBase64Encoded: true,
   queryStringParameters: {
     foo: 'bar',
