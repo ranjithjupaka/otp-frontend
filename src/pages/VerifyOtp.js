@@ -1,13 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import KeyIcon from '@mui/icons-material/Key'
 import Typography from '@mui/material/Typography'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail'
 import Button from '@mui/material/Button'
 import { Box, Paper } from '@mui/material'
+import { useNavigate, useParams } from 'react-router-dom'
+import PutReq from '../constants/PutReq'
+import axios from 'axios'
 
 const VerifyOtp = () => {
+  const [otp, setOTP] = useState('')
+  const params = useParams();
+  let navigate = useNavigate()
+  const handleSubmit = (e) => {
+     e.preventDefault();
+      PutReq.body.email = params.email
+      PutReq.body.otp = otp
+      console.log(PutReq)
+      axios({
+        method: 'put',
+        url: 'https://fsz1mr3nmf.execute-api.ap-south-1.amazonaws.com/dev/otp/verify',
+        data: PutReq,
+      })
+        .then((data) => {
+          console.log(data)
+          navigate('/dashboard')
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+  }
+
+    const handleChange = (event) => {
+      setOTP(event.target.value)
+    }
     return (
       <Box
         sx={{
@@ -18,7 +45,7 @@ const VerifyOtp = () => {
           '& > :not(style)': {
             m: 1,
             width: 350,
-            height: 300,
+            height: 250,
           },
         }}
       >
@@ -45,22 +72,9 @@ const VerifyOtp = () => {
               justifyContent: 'space-between',
               alignItems: 'center',
               flexDirection: 'column',
-              height: '60%',
+              height: '50%',
             }}
           >
-            <TextField
-              placeholder='Enter your Email'
-              type='email'
-              variant='outlined'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <AlternateEmailIcon />
-                  </InputAdornment>
-                ),
-              }}
-              style={{ width: '90%' }}
-            />
             <TextField
               placeholder='Enter OTP'
               variant='outlined'
@@ -73,8 +87,13 @@ const VerifyOtp = () => {
                 ),
               }}
               style={{ width: '90%' }}
+              onChange={handleChange}
             />
-            <Button variant='contained' style={{ width: '90%' }}>
+            <Button
+              variant='contained'
+              style={{ width: '90%' }}
+              onClick={handleSubmit}
+            >
               Verify Account
             </Button>
           </Box>

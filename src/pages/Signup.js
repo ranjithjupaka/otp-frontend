@@ -1,5 +1,5 @@
 import { Box, Paper } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
@@ -7,8 +7,36 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import LockIcon from '@mui/icons-material/Lock'
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail'
 import Button from '@mui/material/Button'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import PostReq from '../constants/PostReq';
 
 const Signup = () => {
+
+  const [email, setEmail] = useState('');
+
+  let navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    PostReq.body.email = email;
+    console.log(PostReq);
+    axios({
+      method: 'post',
+      url: 'https://fsz1mr3nmf.execute-api.ap-south-1.amazonaws.com/dev/otp/generate',
+      data: PostReq,
+    })
+      .then((data) => {
+        console.log(data)
+        navigate(`/verify/${email}`)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  const handleChange = (event) => {
+    setEmail(event.target.value);
+  }
     return (
       <Box
         sx={{
@@ -60,6 +88,7 @@ const Signup = () => {
                 ),
               }}
               style={{ width: '90%' }}
+              required
             />
             <TextField
               placeholder='Enter your Email'
@@ -73,6 +102,8 @@ const Signup = () => {
                 ),
               }}
               style={{ width: '90%' }}
+              onChange={handleChange}
+              required
             />
             <TextField
               placeholder='Enter Password'
@@ -86,6 +117,7 @@ const Signup = () => {
                 ),
               }}
               style={{ width: '90%' }}
+              required
             />
             <TextField
               placeholder='Confirm Password'
@@ -99,8 +131,13 @@ const Signup = () => {
                 ),
               }}
               style={{ width: '90%' }}
+              required
             />
-            <Button variant='contained' style={{ width: '90%' }}>
+            <Button
+              variant='contained'
+              style={{ width: '90%' }}
+              onClick={handleSubmit}
+            >
               Signup
             </Button>
           </Box>

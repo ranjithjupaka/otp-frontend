@@ -8,7 +8,7 @@ const MainRoute = () => {
     return (
       <Routes>
         <Route  path='/' element={<Signup />} />
-        <Route  path='/verify' element={<VerifyOtp />} />
+        <Route  path='/verify/:email' element={<VerifyOtp />} />
         <Route  path='/dashboard' element={<UserDashboard />} />
       </Routes>
     )
