@@ -1,27 +1,30 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import KeyIcon from '@mui/icons-material/Key'
 import Typography from '@mui/material/Typography'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Box, Paper } from '@mui/material'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import PutReq from '../constants/PutReq'
 import axios from 'axios'
 import PopBox from '../components/PopBox'
+import { emailContext } from '../contexts/emailContext'
+
+
 
 const VerifyOtp = () => {
   const [otp, setOTP] = useState('')
   const [open, setOpen] = useState(false)
   const [msg, setMsg] = useState('')
+   const {email} = useContext(emailContext)
 
-  const params = useParams();
   let navigate = useNavigate()
   const handleSubmit = (e) => {
      e.preventDefault();
-      PutReq.body.email = params.email
+      PutReq.body.email = email
       PutReq.body.otp = otp
-      console.log(PutReq)
+      console.log(email)
       axios({
         method: 'put',
         url: 'https://fsz1mr3nmf.execute-api.ap-south-1.amazonaws.com/dev/otp/verify',
@@ -81,9 +84,12 @@ const VerifyOtp = () => {
               justifyContent: 'space-between',
               alignItems: 'center',
               flexDirection: 'column',
-              height: '50%',
+              height: '60%',
             }}
           >
+            <Typography variant='h6' style={{ color: '#695d76' }}>
+              {email}
+            </Typography>
             <TextField
               placeholder='Enter OTP'
               variant='outlined'
