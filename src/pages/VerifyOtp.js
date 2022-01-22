@@ -57,7 +57,7 @@ const VerifyOtp = () => {
           '& > :not(style)': {
             m: 1,
             width: 350,
-            height: 250,
+            height: 300,
           },
         }}
       >
